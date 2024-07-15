@@ -205,13 +205,16 @@ def unPackWebcastGiftMessage(data):
 # xx成员进入直播间消息
 def unPackWebcastMemberMessage(data):
     global member_num
+    global nick_name
     memberMessage = MemberMessage()
     memberMessage.ParseFromString(data)
     data = json_format.MessageToDict(memberMessage, preserving_proto_field_name=True)
     # 直播间人数统计
     member_num = int(data.get("memberCount", 0))
+    nick_name = data.get("user").get("nickName")
     log = json.dumps(data, ensure_ascii=False)
-    logger.info(f'[unPackWebcastMemberMessage] [直播间成员加入: {member_num}] [房间Id：' + liveRoomId + '] | ' + log)
+    logger.info(f'[unPackWebcastMemberMessage] [直播间成员 {nick_name} 加入: {member_num}] [房间Id：' + liveRoomId + '] | ' + log)
+    os.system(f'edge-playback -v zh-CN-liaoning-XiaobeiNeural -t "欢迎{nick_name}" --rate=+40%')
     return data
 
 
