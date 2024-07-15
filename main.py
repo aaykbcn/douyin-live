@@ -15,4 +15,5 @@ if __name__ == '__main__':
     # 推送直播点赞等数据
     send_start()
     # 在config.py配置中修改直播地址: LIVE_ROOM_URL
+    LIVE_ROOM_URL=input("LiveRoom Address: ")
     dy_live.parseLiveRoomUrl(LIVE_ROOM_URL)

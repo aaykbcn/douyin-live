@@ -1,7 +1,7 @@
 import logging
 
 # 配置日志信息
-LOG_FILE_SAVE = True
+LOG_FILE_SAVE = False
 LOG_FILE_NAME = "log.txt"
 LOG_LEVEL = logging.DEBUG
 LOG_FORMAT = "%(asctime)s - %(levelname)s - %(message)s"
@@ -17,7 +17,7 @@ LIVE_RANK_INTERVAL = 10
 # 使用ws推送直播数据
 LIVE_WEB_SEND = False
 # 是否开启HTTP推送
-LIVE_HTTP_SEND = True
+LIVE_HTTP_SEND = False
 # 多久向服务端推送一条消息
 LIVE_SEND_INTERVAL = 3
 # HTTP推送地址：普通用户不用管下面的配置，需要将直播数据推送到你们服务器的才配置

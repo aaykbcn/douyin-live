@@ -11,6 +11,7 @@ import time
 import requests
 import websocket
 import random, hashlib, jsengine
+import pyautogui
 from urllib.parse import urlparse, parse_qs, urlencode, urlunparse
 from src.utils.ws_send import ws_sender
 from src import live_rank
@@ -107,9 +108,9 @@ def onMessage(ws: websocket.WebSocketApp, message: bytes):
             continue
 
         # WebcastRoomStatsMessage
-        if msg.method == 'WebcastRoomStatsMessage':
-            print("WebcastRoomStatsMessage")
-        logger.info('[onMessage] [待解析方法' + msg.method + '等待解析～] [房间Id：' + liveRoomId + ']')
+        # if msg.method == 'WebcastRoomStatsMessage':
+        #     print("WebcastRoomStatsMessage")
+        # logger.info('[onMessage] [待解析方法' + msg.method + '等待解析～] [房间Id：' + liveRoomId + ']')
 
 
 def unPackWebcastCommonTextMessage(data):
@@ -188,6 +189,11 @@ def unPackWebcastGiftMessage(data):
         GlobalVal.gift_value += (int(data["gift"]["diamondCount"]) * int(data.get("totalCount", 1)))
         # 将消息发送到我们自己的服务器:websocket链接
         ws_sender(f"收到礼物: {gift_name}，礼物数量:{GlobalVal.gift_num}，礼物价值: {GlobalVal.gift_value}")
+        print(f"收到 {nick_name} 赠送的礼物: {gift_name}，礼物数量:{GlobalVal.gift_num}，礼物价值: {GlobalVal.gift_value}")
+        # os.system(f'edge-playback -v zh-HK-HiuGaaiNeural -t "多谢{nick_name}赠送的礼物, {gift_name}" --rate=+80%')
+        os.system(f'edge-playback -v zh-CN-liaoning-XiaobeiNeural -t "多谢{nick_name}赠送的礼物, {gift_name}" --rate=+40%')
+        # pyautogui.write(f"收到 {nick_name} 赠送的礼物: {gift_name}")
+        # pyautogui.press('enter')
     except Exception as e:
         logger.error(f"解析礼物数据出错: {e}")
     log = json.dumps(data, ensure_ascii=False)
